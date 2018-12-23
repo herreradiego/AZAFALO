@@ -32,6 +32,7 @@ class App extends Component {
     this.adduser = this.addUser.bind(this)
     this.removeUser = this.removeUser.bind(this)
     this.removeInput = this.removeInput.bind(this)
+    this.handleRuletaRusa = this.handleRuletaRusa.bind(this)
     /*this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCloseBanner = this.handleCloseBanner.bind(this);
     this.removeMember = this.removeMember.bind(this)
@@ -117,6 +118,16 @@ class App extends Component {
     userListRef.set(integrantes);
 
   }
+
+  handleRuletaRusa(){
+    
+    const userList = this.state.integrantes
+    const userListLength = userList.length
+    const selected = Math.floor(Math.random() * userListLength)
+    const winner = userList[selected]
+
+    console.log("WINNER IS: "+ winner.userName)
+  }
     
 
 
@@ -136,7 +147,7 @@ class App extends Component {
       </header>
           <IntegrantesList removeUser={this.removeUser} membersList={this.state.integrantes} />
           <AddUsersInput displayState={this.state.showInput} addUser={this.adduser} removeInput={this.removeInput} className={this.state.showInput ? null : "hide"}/>
-          <Splitter displaySplitter={this.state.showSplitter}/>
+          <Splitter displaySplitter={this.state.showSplitter} handleRuletaRusa={this.handleRuletaRusa} />
      
       
       
