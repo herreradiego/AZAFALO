@@ -32,9 +32,8 @@ class RenderWinner extends React.Component{
             <div>
                 {this.props.showRenderWinner ? <div>
                     
-                    {this.state.isLoading ? <img src={"https://i.imgur.com/seuaOqf.gif?1"}/> : <h2>El winner is {this.props.winner.userName}</h2>}
-                     
-                    
+                    {this.state.isLoading ? <img src={"https://i.imgur.com/seuaOqf.gif?1"}/> : <h2>El winner is {this.props.winner.name} y tiene que poner: {this.props.winner.amount2Pay}</h2>}
+                         
                 </div>
                 :null }
             </div>

@@ -38,11 +38,6 @@ class App extends Component {
     this.removeUser = this.removeUser.bind(this)
     this.removeInput = this.removeInput.bind(this)
     this.handleSelection = this.handleSelection.bind(this)
-    /*this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCloseBanner = this.handleCloseBanner.bind(this);
-    this.removeMember = this.removeMember.bind(this)
-    this.handleFinish =  this.handleFinish.bind(this)
-    this.handleRuletaRusa = this.handleRuletaRusa.bind(this)*/
   }
   
 
@@ -58,44 +53,27 @@ class App extends Component {
       let newState=[]
       const userList = snapshot.val()
       const userId = snapshot.key
-     console.log("valores: "+JSON.stringify(userList))
+      console.log("valores: "+JSON.stringify(userList))
     
-     for(let user in userList){
+      for(let user in userList){
 
-      newState.push({
+        newState.push({
           id : user,
           userName :userList[user].userName,
           userBudget:userList[user].userBudget,
           sorteado : false
-      
-      })
+        })
+      }
 
-     /*       
-      console.log("ITEM  /////"+user+"  ///////"+JSON.stringify(userList))
-      newState.push({
-
-        id : userList[user].id,
-        userName :userList[user].userName,
-        userBudget:userList[user].userBudget,
-        sorteado : false
-    
-    })
-    */
-  }
-
+  /* CHECK
   console.log("Newstate = "+JSON.stringify(newState))
   console.log("ESTADO = "+JSON.stringify(this.state.integrantes))
-  this.setState({
-    integrantes:newState
-  })
-      
+  */
+      this.setState({
+        integrantes:newState
+      })  
     })
 
-
-  
-    
-
-    
   }
   
   
@@ -107,7 +85,24 @@ class App extends Component {
   }
 
   removeInput(){
-    console.log("REMOVEEE INPUT")
+    
+
+    /*Armo la lista de pibes, saco los montos que puso cada uno y sumo todo para armar el total*/    
+    const listaPibes = this.state.integrantes
+    const amount = listaPibes.map(item=>{
+      return parseInt(item.userBudget)
+    })
+
+    const getTotalAmount = amount.reduce((acc,val)=>{
+      return  acc + val
+    },0)
+
+
+    /*Calculo el 70% que va a pagar el ganador de ruleta rusa*/ 
+    const ruletaRusaAmount = Math.round(0.7*getTotalAmount); 
+
+    console.log("el 70% esl: ",ruletaRusaAmount)
+
     this.setState({
       showInput:false,
       showSplitter:true
@@ -124,21 +119,46 @@ class App extends Component {
 
   }
 
+
+
   handleSelection(selection){
     console.log("handle selection")
+
+
+    /*Ruleta rusa*/
     const userList = this.state.integrantes
     const userListLength = userList.length
     const selected = Math.floor(Math.random() * userListLength)
     const winner = userList[selected]
 
+    /*Saco los montos que puso cada uno y sumo todo para armar el total*/    
+    const amount = userList.map(item=>{
+      return parseInt(item.userBudget)
+    })
+
+    const getTotalAmount = amount.reduce((acc,val)=>{
+      return  acc + val
+    },0)
+
+
+    /*Calculo el 70% que va a pagar el ganador de ruleta rusa*/ 
+    const ruletaRusaAmount = Math.round(0.7*getTotalAmount); 
+
+    console.log("el 70% esl: ",ruletaRusaAmount)
+
+  /*fin*/
+  
+
+
     this.setState({ 
-      winner: winner,
+      winner: {
+        name:winner.userName,
+        amount2Pay:ruletaRusaAmount
+      },
       showIntegrantesList:false,
       showRenderWinner:true
      }, () => 
     console.log(this.state.winner.userName," ",this.state.showIntegrantesList));
-
-    //console.log("WINNER IS: "+ this.state.winner +"MOSTRAR LISTA DE INTEGRANTES: " +this.state.showIntegrantesList +"MOSTRAR BANNER DE GANADOR: " + this.state.showRenderWinner)
   }
     
 
@@ -161,10 +181,6 @@ class App extends Component {
           <RenderWinner showRenderWinner={this.state.showRenderWinner} winner={this.state.winner}/>
           <AddUsersInput displayState={this.state.showInput} addUser={this.adduser} removeInput={this.removeInput} className={this.state.showInput ? null : "hide"}/>
           <Splitter displaySplitter={this.state.showSplitter} selectedValue={this.handleSelection} />
-     
-      
-      
-    
       </div>
     );
   }
