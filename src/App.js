@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import IntegrantesList from './IntegranteList'
+import RenderWinner from './RenderWinner'
 import Results from './Results'
 import Splitter from './Splitter'
 import AddUsersInput from './AddUsersInput'
@@ -25,14 +26,18 @@ class App extends Component {
     super(props)
     this.state={
       integrantes:[],
+      winner:null,
       showInput:true,
-      showSplitter:false
+      showSplitter:false,
+      showRenderWinner:false,
+      showIntegrantesList:true
+
     }
 
     this.adduser = this.addUser.bind(this)
     this.removeUser = this.removeUser.bind(this)
     this.removeInput = this.removeInput.bind(this)
-    this.handleRuletaRusa = this.handleRuletaRusa.bind(this)
+    this.handleSelection = this.handleSelection.bind(this)
     /*this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCloseBanner = this.handleCloseBanner.bind(this);
     this.removeMember = this.removeMember.bind(this)
@@ -119,14 +124,21 @@ class App extends Component {
 
   }
 
-  handleRuletaRusa(){
-    
+  handleSelection(selection){
+    console.log("handle selection")
     const userList = this.state.integrantes
     const userListLength = userList.length
     const selected = Math.floor(Math.random() * userListLength)
     const winner = userList[selected]
 
-    console.log("WINNER IS: "+ winner.userName)
+    this.setState({ 
+      winner: winner,
+      showIntegrantesList:false,
+      showRenderWinner:true
+     }, () => 
+    console.log(this.state.winner.userName," ",this.state.showIntegrantesList));
+
+    //console.log("WINNER IS: "+ this.state.winner +"MOSTRAR LISTA DE INTEGRANTES: " +this.state.showIntegrantesList +"MOSTRAR BANNER DE GANADOR: " + this.state.showRenderWinner)
   }
     
 
@@ -145,9 +157,10 @@ class App extends Component {
         <h1>ASAFALO 1.0</h1>
         <h6>Una forma divertida de dividir gastos</h6>
       </header>
-          <IntegrantesList removeUser={this.removeUser} membersList={this.state.integrantes} />
+          <IntegrantesList showIntegrantesList={this.state.showIntegrantesList} removeUser={this.removeUser} membersList={this.state.integrantes} />
+          <RenderWinner showRenderWinner={this.state.showRenderWinner} winner={this.state.winner}/>
           <AddUsersInput displayState={this.state.showInput} addUser={this.adduser} removeInput={this.removeInput} className={this.state.showInput ? null : "hide"}/>
-          <Splitter displaySplitter={this.state.showSplitter} handleRuletaRusa={this.handleRuletaRusa} />
+          <Splitter displaySplitter={this.state.showSplitter} selectedValue={this.handleSelection} />
      
       
       

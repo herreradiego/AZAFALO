@@ -8,6 +8,11 @@ class Splitter extends React.Component {
     this.state = {
       isLoading:true
     }
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick(selection){
+    this.props.selectedValue(selection)
   }
 
   render(){
@@ -16,7 +21,7 @@ class Splitter extends React.Component {
         {this.props.displaySplitter ? 
         <div className="splitterContainer">
           <h6>Seleccione la forma en la cual se dividiran los gastos</h6>
-          <button onClick={this.props.handleRuletaRusa}>
+          <button onClick={(event)=>{this.handleClick("ruletaRusa")}}>
             <div className="splitterBtn">
               <span className="splliterBtnTitle">RULETA RUSA</span>
               <span className="splitterDescription"> SE ELIGE RANDOM UNA PERSONA DEL LISTADO QUIEN PAGARÁ LA MITAD DE LA CUENTA</span>

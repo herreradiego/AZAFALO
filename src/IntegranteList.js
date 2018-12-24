@@ -11,6 +11,8 @@ const data = this.props.membersList
   //  console.log("INTEGERLIST DALEEE" +JSON.stringify(data))
 }
 
+
+
 handleRemoveUser(key){
    console.log("queres borrar"+key)
    this.props.removeUser(key)
@@ -19,7 +21,9 @@ handleRemoveUser(key){
         const data = this.props.membersList
         return(
             <div>
-                <div className="tableHeader">
+                {this.props.showIntegrantesList ? 
+                <div>
+                    <div className="tableHeader">
                     <span>Nombre</span><span>$</span><span>Eliminar</span>
                 </div>
                 <div className="userContainer">
@@ -35,6 +39,8 @@ handleRemoveUser(key){
                         )
                     })}
                 </div>
+                </div> : null }
+                
             </div>
         )
     }
