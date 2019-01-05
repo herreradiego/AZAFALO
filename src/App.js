@@ -39,6 +39,7 @@ class App extends Component {
     this.removeUser = this.removeUser.bind(this)
     this.removeInput = this.removeInput.bind(this)
     this.handleSelection = this.handleSelection.bind(this)
+    this.reinitializeApp = this.reinitializeApp.bind(this)
   }
   
 
@@ -121,6 +122,13 @@ class App extends Component {
 
   }
 
+  reinitializeApp(){
+    console.log("reiniciaste!")
+
+    //Borro todos los datos de la DB
+    return userListRef.remove();
+  }
+
 
 
   handleSelection(selection){
@@ -187,16 +195,21 @@ class App extends Component {
           {this.state.showRenderWinner ? <RenderWinner showRenderWinner={this.state.showRenderWinner} winner={this.state.winner}/> :null}
           {this.state.showInput ? <AddUsersInput displayState={this.state.showInput} addUser={this.adduser} removeInput={this.removeInput} className={this.state.showInput ? null : "hide"}/>:null}
           {this.state.showSplitter ? <Splitter displaySplitter={this.state.showSplitter} selectedValue={this.handleSelection} />:null}
-          {this.state.showResetBtn ? <ResetBtn/> : null}
+          {this.state.showResetBtn ? <ResetBtn reset={this.reinitializeApp}/> : null}
       </div>
     );
   }
 }
 
-const ResetBtn = ()=>{
+const ResetBtn = (props)=>{
+
+  function restart(){
+    console.log("ADENTRO RESTARTEO")
+  }
+
   return(
     <div>
-    <button>REINICIAR EL GILADON!</button>
+    <button onClick={props.reset}>RESTART  !</button>
     </div>
   )
 }
