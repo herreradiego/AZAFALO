@@ -4,41 +4,32 @@ class RenderWinner extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            isLoading:true
+            isLoading:setTimeout(() => {
+                this.setState({
+                    isLoading: false
+              })
+            }, 2000)
         }
-        this.delayState = this.delayState.bind(this)
+
+        //this.delayState = this.delayState.bind(this)
     }
 
-    
 
-    componentDidMount(){
-       
-        this.delayState()
 
-       
-    }
-
-    delayState() {
-        setTimeout(() => {
-            this.setState({
-            isLoading: false
-          })
-        }, 9999);
-    }
 
     render(){
+        
         console.log("from RENDER WINNDER" + this.state.showRenderWinner)
         return(
-            <div>
-                {this.props.showRenderWinner ? <div>
+            <div className="winnerBanner">
+               
                     
-                    {this.state.isLoading ? <img src={"https://i.imgur.com/seuaOqf.gif?1"}/> : <h2>El winner is {this.props.winner.name} y tiene que poner: {this.props.winner.amount2Pay}</h2>}
+                    {this.state.isLoading ? <img src={"https://i.imgur.com/seuaOqf.gif?1"}/> : 
+                    <h5><b>{this.props.winner.name}</b>, estas hastas las manos... fuiste victima de la Ruleta Rusa 
+                    y tenes que poner: ${this.props.winner.amount2Pay}</h5>}
                          
-                </div>
-                :null }
             </div>
-                
-        )
+            )
     }
 }
 

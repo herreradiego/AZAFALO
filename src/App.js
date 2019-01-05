@@ -30,7 +30,8 @@ class App extends Component {
       showInput:true,
       showSplitter:false,
       showRenderWinner:false,
-      showIntegrantesList:true
+      showIntegrantesList:false,
+      showResetBtn:false
 
     }
 
@@ -70,7 +71,8 @@ class App extends Component {
   console.log("ESTADO = "+JSON.stringify(this.state.integrantes))
   */
       this.setState({
-        integrantes:newState
+        integrantes:newState,
+        showIntegrantesList:true
       })  
     })
 
@@ -154,9 +156,12 @@ class App extends Component {
       winner: {
         name:winner.userName,
         amount2Pay:ruletaRusaAmount
+        
       },
       showIntegrantesList:false,
-      showRenderWinner:true
+      showRenderWinner:true,
+      showSplitter:false,
+      showResetBtn:true
      }, () => 
     console.log(this.state.winner.userName," ",this.state.showIntegrantesList));
   }
@@ -177,13 +182,23 @@ class App extends Component {
         <h1>ASAFALO 1.0</h1>
         <h6>Una forma divertida de dividir gastos</h6>
       </header>
-          <IntegrantesList showIntegrantesList={this.state.showIntegrantesList} removeUser={this.removeUser} membersList={this.state.integrantes} />
-          <RenderWinner showRenderWinner={this.state.showRenderWinner} winner={this.state.winner}/>
-          <AddUsersInput displayState={this.state.showInput} addUser={this.adduser} removeInput={this.removeInput} className={this.state.showInput ? null : "hide"}/>
-          <Splitter displaySplitter={this.state.showSplitter} selectedValue={this.handleSelection} />
+          
+          {this.state.showIntegrantesList ? <IntegrantesList showIntegrantesList={this.state.showIntegrantesList} removeUser={this.removeUser} membersList={this.state.integrantes} />:null}
+          {this.state.showRenderWinner ? <RenderWinner showRenderWinner={this.state.showRenderWinner} winner={this.state.winner}/> :null}
+          {this.state.showInput ? <AddUsersInput displayState={this.state.showInput} addUser={this.adduser} removeInput={this.removeInput} className={this.state.showInput ? null : "hide"}/>:null}
+          {this.state.showSplitter ? <Splitter displaySplitter={this.state.showSplitter} selectedValue={this.handleSelection} />:null}
+          {this.state.showResetBtn ? <ResetBtn/> : null}
       </div>
     );
   }
+}
+
+const ResetBtn = ()=>{
+  return(
+    <div>
+    <button>REINICIAR EL GILADON!</button>
+    </div>
+  )
 }
 
 

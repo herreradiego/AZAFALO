@@ -65,7 +65,7 @@ componentDidMount(){
 
     render(){
         return(
-       <div>{this.props.displayState ?      <div>
+       <div className="inputContainer">{this.props.displayState ?      <div>
         <WelcomeMessage show={this.state.welcomeBanner.show}/>
         <form onSubmit={this.handleSubmit}>
             <h5>AGREGAR INTEGRANDOS DEL ASADO:</h5>

@@ -17,12 +17,14 @@ handleRemoveUser(key){
    console.log("queres borrar"+key)
    this.props.removeUser(key)
 }
+
+
     render(){
+        
         const data = this.props.membersList
         return(
             <div>
-                {this.props.showIntegrantesList ? 
-                <div>
+                
                     <div className="tableHeader">
                     <span>Nombre</span><span>$</span><span>Eliminar</span>
                 </div>
@@ -38,8 +40,8 @@ handleRemoveUser(key){
                             </div>
                         )
                     })}
-                </div>
-                </div> : null }
+                    </div>
+                
                 
             </div>
         )

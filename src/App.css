@@ -118,6 +118,10 @@ form{
   border: 1px solid black;
   }
 
+  .inputContainer{
+    align-self: end;
+  }
+
 .bannerContainer{
 display:grid;
 align-items: end;
@@ -191,6 +195,10 @@ justify-content: center;
   display: none;
 }
 
+
+.winnerBanner{
+  align-self: center;
+}
 
 
 
