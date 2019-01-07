@@ -2,12 +2,21 @@ import React, {Component} from 'react'
 
 class IntegranteList extends Component{
     constructor(props){
-        super()
+        super(props)
+        this.state={
+            showList:false
+        }
+        
 
 this.handleRemoveUser=this.handleRemoveUser.bind(this)
     }    
 componentDidMount(){
 const data = this.props.membersList
+if(data.lenght > 0){
+    this.setState({
+        showList:true
+    })
+}
   //  console.log("INTEGERLIST DALEEE" +JSON.stringify(data))
 }
 
@@ -45,7 +54,30 @@ handleRemoveUser(key){
                 
             </div>
         )
-    }
 }
+
+}
+/*
+const TableHeader = (props)=>{
+const arrayList = Array.from(props.arraydata).length
+console.log("LENGHT"+arrayList)
+    const lenghtChk = ()=>{
+        if(arrayList.length > 0){
+            return(
+                <div className="tableHeader">
+                    <span>Nombre</span><span>$</span><span>Eliminar</span>
+                </div>
+            )
+        }else{
+            return null
+        }
+    }
+
+    const output = lenghtChk()
+
+    return(
+        <div>{output}</div>
+    )
+}*/
 
 export default IntegranteList;

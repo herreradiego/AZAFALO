@@ -32,6 +32,7 @@ class App extends Component {
       showRenderWinner:false,
       showIntegrantesList:false,
       showResetBtn:false
+      
 
     }
 
@@ -72,8 +73,8 @@ class App extends Component {
   console.log("ESTADO = "+JSON.stringify(this.state.integrantes))
   */
       this.setState({
-        integrantes:newState,
-        showIntegrantesList:true
+        integrantes:newState
+        
       })  
     })
 
@@ -83,6 +84,9 @@ class App extends Component {
      
   addUser(newUser){
     
+    this.setState({
+      showIntegrantesList:true
+    })
     userListRef.push(newUser)
   
   }
@@ -124,55 +128,138 @@ class App extends Component {
 
   reinitializeApp(){
     console.log("reiniciaste!")
+    this.setState({
+      showIntegrantesList:false
+    })
 
     //Borro todos los datos de la DB
-    return userListRef.remove();
+    userListRef.remove();
+
+    this.setState({
+      showIntegrantesList:true,
+      showInput:true,
+      showSplitter:false,
+      showRenderWinner:false,
+      showIntegrantesList:false,
+      showResetBtn:false
+
+    })
   }
+
 
 
 
   handleSelection(selection){
     console.log("handle selection")
-
-
-    /*Ruleta rusa*/
+    
     const userList = this.state.integrantes
     const userListLength = userList.length
     const selected = Math.floor(Math.random() * userListLength)
     const winner = userList[selected]
 
-    /*Saco los montos que puso cada uno y sumo todo para armar el total*/    
+    /*Saco los montos que puso cada uno y sumo todo para armar el total*/   
     const amount = userList.map(item=>{
       return parseInt(item.userBudget)
     })
 
+    /*Calculo el 70% que va a pagar el ganador de ruleta rusa*/ 
     const getTotalAmount = amount.reduce((acc,val)=>{
       return  acc + val
     },0)
 
 
-    /*Calculo el 70% que va a pagar el ganador de ruleta rusa*/ 
-    const ruletaRusaAmount = Math.round(0.7*getTotalAmount); 
+    const ruletaRusa = ()=>{
+ 
+      const ruletaRusaAmount = Math.round(0.7*getTotalAmount); 
 
-    console.log("el 70% esl: ",ruletaRusaAmount)
+      console.log("el 70% esl: ",ruletaRusaAmount)
 
-  /*fin*/
-  
+      return this.setState({ 
+        winner: {
+          name:winner.userName,
+          amount2Pay:ruletaRusaAmount,
+          resultType:"RuletaRusa"
+          
+        },
+          showIntegrantesList:false,
+          showRenderWinner:true,
+          showSplitter:false,
+          showResetBtn:true
+        }, () => 
+        console.log(this.state.winner.userName," ",this.state.showIntegrantesList));
+    }
+
+//Haciendo la funcion bondi
+  const bondi = ()=>{
+    
+
+    const userList = this.state.integrantes
+    const userListLength = userList.length
+    //Dos personas comparten el 60% del gasto
+    const selectRamdomTwo = (userList,userListLength)=>{
+      
+        const numOne = Math.floor(Math.random() * userListLength);
+        const filteredUserList = userList.map((item,index)=>{
+          if(index!==numOne){
+            return item
+          }else{
+            return null
+          }
+        })
+
+        const numTwo = Math.floor(Math.random() * selectRamdomTwo.length)
+        console.log("numTwo = "+JSON.stringify(numTwo))
+        console.log("winners pay"+getTotalAmount)
+
+        const winnersPay = Math.round(0.6*getTotalAmount); 
+       
+      return this.setState({
+        winner: {
+          winnerOne:userList[numOne].userName,
+          secondWinner:userList[numTwo].userName,
+          amount2Pay:winnersPay/2,
+          resultType:"Bondi",
+          
+            },
+          showIntegrantesList:false,
+          showRenderWinner:true,
+          showSplitter:false,
+          showResetBtn:true
+          })
+      
+   
+
+      
 
 
-    this.setState({ 
-      winner: {
-        name:winner.userName,
-        amount2Pay:ruletaRusaAmount
-        
-      },
-      showIntegrantesList:false,
-      showRenderWinner:true,
-      showSplitter:false,
-      showResetBtn:true
-     }, () => 
-    console.log(this.state.winner.userName," ",this.state.showIntegrantesList));
+    }
+    
+
+    
+   
+    const bondiWinner = selectRamdomTwo(userList,userListLength)
+   
+
   }
+  
+    
+switch(selection){
+  case 'ruletaRusa':
+  return ruletaRusa()
+  break
+  case 'bondi':
+  return bondi()
+  break
+  /*default:
+  return todosPorIgual()
+  break*/
+}
+
+  
+  }
+
+
+    
     
 
 
@@ -209,7 +296,7 @@ const ResetBtn = (props)=>{
 
   return(
     <div>
-    <button onClick={props.reset}>RESTART  !</button>
+    <button className="restartBtn" onClick={props.reset}>RESTART  !</button>
     </div>
   )
 }

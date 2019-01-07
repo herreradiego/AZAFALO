@@ -27,14 +27,14 @@ class Splitter extends React.Component {
               <span className="splitterDescription"> SE ELIGE RANDOM UNA PERSONA DEL LISTADO QUIEN PAGARÁ LA MITAD DE LA CUENTA</span>
             </div>
           </button>
-          <button>
+          <button onClick={(event)=>{this.handleClick("bondi")}}>
             <div className="splitterBtn">
               <span className="splliterBtnTitle">BONDI</span>
-              <span className="splitterDescription">DOS INTEGRANTES DEL GRUPO PAGARAN UN 30%</span>
+              <span className="splitterDescription">Minimo 3 integrantes: DOS INTEGRANTES DEL GRUPO PAGARAN UN 30%</span>
             </div>
           </button>
           <button>
-            <div className="splitterBtn">
+            <div onClick={(event)=>{this.handleClick("igual")}} className="splitterBtn">
               <span className="splliterBtnTitle">TODOS X IGUAL</span>
               <span className="splitterDescription">TODOS PAGAN LO MISMO</span>
             </div>
