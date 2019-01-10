@@ -14,7 +14,7 @@ componentDidMount(){
 const data = this.props.membersList
 if(data.lenght > 0){
     this.setState({
-        showList:true
+        showList:true.imgUrl,
     })
 }
   //  console.log("INTEGERLIST DALEEE" +JSON.stringify(data))
@@ -39,15 +39,23 @@ handleRemoveUser(key){
                 </div>
                 <div className="userContainer">
                     {data.map(item=>{
-                    console.log("ITEMMMMM: "+JSON.stringify(item.id))
+                   // console.log("ITEMMMMM: "+JSON.stringify(item))
                     const key = item.id
+                    
+                        const url = item.urlImg
                         return(
                             <div className="userRow">
-                                <h2>{item.userName}</h2>
+                            <div className="avatarNameCont">
+                                <img className="avatarImg" src={url}/>
+                                <h2 className="userTitle">{item.userName}</h2>
+                            </div>  
                                 <h3>{item.userBudget}</h3>
                                 <button className="removeMemberBtn" onClick={(event)=>{this.handleRemoveUser(key)}}>X</button>
                             </div>
                         )
+
+                   
+                        
                     })}
                     </div>
                 

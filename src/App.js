@@ -48,30 +48,37 @@ class App extends Component {
  
   
   componentDidMount(){
+
     var self = this;
 
-    console.log("member list "+JSON.stringify(this.state.memberList)+" Split Menu "+JSON.stringify(this.state.splitMenu))
+  //console.log("member list "+JSON.stringify(this.state.memberList)+" Split Menu "+JSON.stringify(this.state.splitMenu))
 
-    userListRef.on("value",(snapshot)=>{
+    userListRef.on("value",async (snapshot)=>{
       let newState=[]
       const userList = snapshot.val()
       const userId = snapshot.key
-      console.log("valores: "+JSON.stringify(userList))
+      //console.log("valores: "+JSON.stringify(userList))
     
       for(let user in userList){
+        try{
+          
+          const urlCall = await fetch('https://api.thecatapi.com/v1/images/search')
+          const response = await urlCall.json()
+          console.log("ENTRO ÑERI"+JSON.stringify(response[0].url))
+          newState.push({
+            id : user,
+            urlImg:response[0].url,
+            userName :userList[user].userName,
+            userBudget:userList[user].userBudget,
+            sorteado : false
+          })
 
-        newState.push({
-          id : user,
-          userName :userList[user].userName,
-          userBudget:userList[user].userBudget,
-          sorteado : false
-        })
+        }catch (err){
+          console.log("error: ",err)
+        }
+      
       }
 
-  /* CHECK
-  console.log("Newstate = "+JSON.stringify(newState))
-  console.log("ESTADO = "+JSON.stringify(this.state.integrantes))
-  */
       this.setState({
         integrantes:newState
         
