@@ -1,8 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-
 *{
   box-sizing: border-box;  
-  font-family: 'Roboto', sans-serif;
 }
 
 h1,h2,h3,h4,h5,h6{
@@ -16,7 +13,6 @@ h1,h2,h3,h4,h5,h6{
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
-  align-items: start;
   min-height: 100vh;
   
 }
@@ -68,9 +64,10 @@ border-radius: 0;
 border: 1px solid black;
 }
 
-
 .userContainer{
   display:grid;
+
+  max-height: 50vh;
   overflow: scroll;
   display: grid;
   grid-template-rows: repeat(auto-fill);
@@ -84,78 +81,6 @@ border: 1px solid black;
   text-transform: uppercase;
   padding:5px 0px;
 }
-
-
-/*USER LIST*/
-.grid{
-  display: grid;
- grid-template-columns: 1fr;
- grid-template-rows:1fr;
-
-}
-
-.tableHeader{
- display:grid;
- grid-template-columns: 3fr 1fr 1fr;
- background:#A76E88;
- color:white;
- justify-items: center;
- text-transform: uppercase;
- font-weight: bold;
- 
-}
-.tableData{
- display:grid;
- backdround:red;
- grid-template-columns: 3fr  1fr 1fr;
- border-bottom:1px solid rgba(240, 56, 107, 0.2);
- padding:8px 0px;
-color:rgb(255, 25, 132);
- 
-
-}
-
-.ImgNameCont{
-justify-items: start;
-padding-left:10px;
-display:grid;
-grid-template-columns:55px 1fr;
-}
-
-span img{
-border-radius:50px;
-width: 50px;
-height: 50px;
-
-}
-
-
-
-span{
-
-align-self: center;
-text-align:center;
-
-
-}
-
-.tableData:nth-child(odd){
-background-color:#F8E7ED;
-
-}
-
-
-.deleteButton{
-background-color:#F0386B;
-color:white;
-padding:5px;
-border-radius:5px;
-border:0px;
-}
-
-/*USER LIST*/
-
-/*
 .userRow{
   display: grid;
   font-size:12px;
@@ -194,34 +119,25 @@ border:0px;
 .Off{
   display:none;
 }
-*/
+
 form{
 
   display:grid;
   grid-template-columns: 1fr;
-  
-  color:white;
   text-align: left;
-  background-color: #f33469;
+  background-color: chocolate;
 }
-.formText{
-  padding:10px 5px;
-  
-}
+
 .addMemberBtn,.finishBtn,restartBtn{
 
   padding: 10px 15px;
   font-size: 20px;
   border-radius: 0;
   -webkit-appearance: none;
-  color: white;
-  text-transform: uppercase;
-  background-color:#009E8D;
+  border: 1px solid black;
   }
 
   .inputContainer{
-    
-
     align-self: end;
   }
 
@@ -229,11 +145,8 @@ form{
 display:grid;
 align-items: end;
 justify-content: center;
-border:1px solid #F8E7ED;
-letter-spacing: 2px;
-
 }
-/*
+
 .closBtn{
   border:0px;
   padding:0px;
@@ -248,7 +161,6 @@ letter-spacing: 2px;
   width: 50px;
   border: 1px solid black;
 }
-*/
 
 
 

@@ -5,6 +5,7 @@ class IntegranteList extends Component{
         super(props)
         this.state={
             showList:false
+            
         }
         
 
@@ -12,6 +13,9 @@ this.handleRemoveUser=this.handleRemoveUser.bind(this)
     }    
 componentDidMount(){
 const data = this.props.membersList
+
+
+
 if(data.lenght > 0){
     this.setState({
         showList:true.imgUrl,
@@ -31,36 +35,34 @@ handleRemoveUser(key){
     render(){
         
         const data = this.props.membersList
-        return(
-            <div>
-                
-                    <div className="tableHeader">
-                    <span>Nombre</span><span>$</span><span>Eliminar</span>
+     
+        const renderUser = data.map((item,index)=>{
+            const key = item.id
+            const url = item.imgUrl
+            return(
+                <div class="tableData">
+                    <span class="ImgNameCont">
+                        <img src={url}/>                
+                        <span>{item.userName}</span>
+                    </span>
+                    <span>{item.userBudget}</span>
+                    <span><button class="deleteButton" onClick={(event)=>{this.handleRemoveUser(key)}}>Eliminar</button></span>
                 </div>
-                <div className="userContainer">
-                    {data.map(item=>{
-                   // console.log("ITEMMMMM: "+JSON.stringify(item))
-                    const key = item.id
-                    
-                        const url = item.urlImg
-                        return(
-                            <div className="userRow">
-                            <div className="avatarNameCont">
-                                <img className="avatarImg" src={url}/>
-                                <h2 className="userTitle">{item.userName}</h2>
-                            </div>  
-                                <h3>{item.userBudget}</h3>
-                                <button className="removeMemberBtn" onClick={(event)=>{this.handleRemoveUser(key)}}>X</button>
-                            </div>
-                        )
-
-                   
-                        
-                    })}
-                    </div>
+            )
+        })
+        return(
+            <div class="grid">
+                <div class="tableHeader">
+                    <span>Nombre</span>
+                    <span> Budget</span>
+                    <span >Eliminar</span>
+                </div>
+            
+            {
+             this.state.isLoading ? "Loading..." : renderUser   
+            }
                 
-                
-            </div>
+        </div>
         )
 }
 

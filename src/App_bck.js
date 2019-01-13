@@ -57,15 +57,17 @@ class App extends Component {
       let newState=[]
       const userList = snapshot.val()
       const userId = snapshot.key
-      console.log("valores: "+JSON.stringify(userList))
+      //console.log("valores: "+JSON.stringify(userList))
     
       for(let user in userList){
-        console.log("USER :"+user," USERLIST: ",userList)
         try{
           
+          const urlCall = await fetch('https://api.thecatapi.com/v1/images/search')
+          const response = await urlCall.json()
+          console.log("ENTRO ÑERI"+JSON.stringify(response[0].url))
           newState.push({
-            id : userList[user].id,
-            imgUrl:userList[user].imgUrl,
+            id : user,
+            urlImg:response[0].url,
             userName :userList[user].userName,
             userBudget:userList[user].userBudget,
             sorteado : false
@@ -75,24 +77,20 @@ class App extends Component {
           console.log("error: ",err)
         }
       
-      }    this.setState({
+      }
+
+      this.setState({
         integrantes:newState
         
-      },console.log("ESTADO USUARIOS",this.state.integrantes)) 
-
-   
+      })  
     })
 
   }
   
-  componentWillUnmount(){
-    this.setState({
-      isLoading:true
-    })
-  }
+  
      
   addUser(newUser){
-    console.log("UsUARIO A AGREGAR: ",newUser)
+    
     this.setState({
       showIntegrantesList:true
     })
@@ -126,9 +124,8 @@ class App extends Component {
   }
 
   removeUser(key){
-console.log("usuario a borrar",key)
+
     const integrantes = this.state.integrantes.filter(item=>{
-      
       return item.id !== key
     })
 
