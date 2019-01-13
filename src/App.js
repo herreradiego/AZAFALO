@@ -188,7 +188,9 @@ console.log("usuario a borrar",key)
         winner: {
           name:winner.userName,
           amount2Pay:ruletaRusaAmount,
-          resultType:"RuletaRusa"
+          resultType:"RuletaRusa",
+          imgUrl:winner.imgUrl
+
           
         },
           showIntegrantesList:false,
@@ -229,6 +231,7 @@ console.log("usuario a borrar",key)
           secondWinner:userList[numTwo].userName,
           amount2Pay:winnersPay/2,
           resultType:"Bondi",
+          
           
             },
           showIntegrantesList:false,
