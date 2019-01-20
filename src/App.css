@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+:root {
+  font-size: 1rem;
+  --buttonsizes-text-: 1.5rem;
+  --second-color:#ff2e8cf0;
+}
+
 *{
   box-sizing: border-box;  
   font-family: 'Roboto', sans-serif;
@@ -17,9 +23,12 @@ h1,h2,h3,h4,h5,h6{
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
   align-items: start;
-  min-height: 100vh;
+  height: 100vh;
+  
   
 }
+
+
 
 
 .App-header {
@@ -68,6 +77,12 @@ border-radius: 0;
 border: 1px solid black;
 }
 
+.inputError{
+  font-size: 0.5rem;
+  color:var(--second-color);
+  font-weight: bold;
+  letter-spacing: 2px;
+}
 
 .userContainer{
   display:grid;
@@ -91,14 +106,14 @@ border: 1px solid black;
   display: grid;
  grid-template-columns: 1fr;
  grid-template-rows:1fr;
- overflow: scroll;
+ overflow: auto;
 
 }
 
 .tableHeader{
  display:grid;
  grid-template-columns: 3fr 1fr 1fr;
- background:#A76E88;
+ background:var(--second-color);
  color:white;
  justify-items: center;
  text-transform: uppercase;
@@ -147,6 +162,7 @@ background-color:#F8E7ED;
 
 
 .deleteButton{
+font-size:var(--buttonsizes-text);
 background-color:#F0386B;
 color:white;
 padding:5px;
@@ -154,7 +170,46 @@ border-radius:5px;
 border:0px;
 }
 
+
+
+
 /*USER LIST*/
+
+/*RENDER WINNER STYLE*/
+
+.winnerBanner{
+  self-align:center;
+  padding: 15px 15px;
+  /* text-align: justify; */
+  letter-spacing: 2px;
+  font-size:1rem;
+}
+.picAvatarl{
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+}
+
+.looserPicRl{
+  margin:0 auto;
+  display: block;
+  height: 180px;
+  width: 180px;
+}
+.winnerText{
+  padding-top:30px;
+  font-size: 1.5rem;
+  padding-top: 20px;
+  color:#ff0274;
+}
+
+.budget{
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+
+/*RENDER WINNER STYLE**/
 
 /*
 .userRow{
@@ -196,6 +251,13 @@ border:0px;
   display:none;
 }
 */
+
+.inputContainer{
+    
+  overflow: scroll;
+  align-self: end;
+}
+
 form{
 
   display:grid;
@@ -209,21 +271,24 @@ form{
   padding:10px 5px;
   
 }
-.addMemberBtn,.finishBtn,restartBtn{
+.addMemberBtn,.finishBtn,.restartBtn{
 
   padding: 10px 15px;
-  font-size: 20px;
+  font-size: var(--buttonsizes-text-);
   border-radius: 0;
   -webkit-appearance: none;
   color: white;
   text-transform: uppercase;
   background-color:#009E8D;
+  letter-spacing: 1px;
   }
 
-  .inputContainer{
-    
-
-    align-self: end;
+  .restartBtn{
+    width: 100%;
+    font-size:1.3rem;
+    color:white;
+    font-weight: bold;
+    padding:20px 20px;
   }
 
 .bannerContainer{
@@ -232,30 +297,18 @@ align-items: end;
 justify-content: center;
 border:1px solid #F8E7ED;
 letter-spacing: 2px;
+color: #ff0274;
+padding: 10px;
 
 }
-/*
-.closBtn{
-  border:0px;
-  padding:0px;
-  position:absolute;
-  right:0px;
-  top:0px;
-  font-size: 8px;
-}
 
-.removeMemberBtn{
-  text-align: center;
-  width: 50px;
-  border: 1px solid black;
-}
-*/
 
 
 
 .splitterContainer{
   display: grid;
-  height: 20vh;
+  background-color: #ff328e;
+  color:white
 
 }
 
@@ -263,10 +316,12 @@ letter-spacing: 2px;
   border: 1px solid #D3D3D3;
   background-color: #F0386B;
   
+  
 }
 .splitterBtn{
     display: grid;
     grid-template-columns: 80px 1fr;
+
 
   
 }
@@ -283,15 +338,23 @@ letter-spacing: 2px;
 }
 
 .splitterDescription{
-  font-size: 10px;
   text-align: left;
   color: white;
-  padding-left: 15px;
   border-left: 1px solid white;
-  /* margin-left: 20px; */
   text-align: left;
-  padding-left: 10px;
+  font-size: 0.7rem;
+  padding: 10px;
 }
+
+.splitterDescription>span{
+  text-decoration:underline  white;
+  margin:5px;
+}
+.SpitterText{
+  font-size: 1rem;
+    padding: 5px;
+}
+
 
 .monkey{
   width: 350px;
@@ -308,5 +371,18 @@ letter-spacing: 2px;
   align-self: center;
 }
 
+.errorMessage{
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  padding: 5px;
+  color: #ff0274;
+  font-weight: bold;
+  align-self: center;
+
+}
+
+.returToHome{
+
+}
 
 

@@ -41,6 +41,7 @@ class App extends Component {
     this.removeInput = this.removeInput.bind(this)
     this.handleSelection = this.handleSelection.bind(this)
     this.reinitializeApp = this.reinitializeApp.bind(this)
+    this.returnToHome = this.returnToHome.bind(this)
   }
   
 
@@ -68,7 +69,7 @@ class App extends Component {
             imgUrl:userList[user].imgUrl,
             userName :userList[user].userName,
             userBudget:userList[user].userBudget,
-            sorteado : false
+            sorteado : false,
           })
 
         }catch (err){
@@ -76,7 +77,8 @@ class App extends Component {
         }
       
       }    this.setState({
-        integrantes:newState
+        integrantes:newState,
+        showIntegrantesList:true,
         
       },console.log("ESTADO USUARIOS",this.state.integrantes)) 
 
@@ -92,11 +94,25 @@ class App extends Component {
   }
      
   addUser(newUser){
+
     console.log("UsUARIO A AGREGAR: ",newUser)
-    this.setState({
-      showIntegrantesList:true
-    })
-    userListRef.push(newUser)
+    if(newUser.hasOwnProperty("userName") && newUser.hasOwnProperty("userBudget")){
+      
+
+      this.setState({
+        showIntegrantesList:true
+      })
+      userListRef.push(newUser)
+      
+    }else{
+      return(
+        <div>
+          <h6>Falta ingresar El nombre o el dinergo que gastó, vuelva a intentarlo completando todos los datos</h6>
+        </div>
+        )
+      }
+    
+    
   
   }
 
@@ -157,10 +173,24 @@ console.log("usuario a borrar",key)
   }
 
 
+  returnToHome(){
+      this.setState({
+        integrantes:this.state.integrantes,
+        showInput:true,
+        showSplitter:false,
+        showRenderWinner:false,
+        showIntegrantesList:true,
+        showResetBtn:false
+      })
+  }
+  
+    
+  
+
 
 
   handleSelection(selection){
-    console.log("handle selection")
+    console.log("handle selection :",selection)
     
     const userList = this.state.integrantes
     const userListLength = userList.length
@@ -178,7 +208,7 @@ console.log("usuario a borrar",key)
     },0)
 
 
-    const ruletaRusa = ()=>{
+    const ruletaRusa = () => {
  
       const ruletaRusaAmount = Math.round(0.7*getTotalAmount); 
 
@@ -207,7 +237,9 @@ console.log("usuario a borrar",key)
 
     const userList = this.state.integrantes
     const userListLength = userList.length
-    //Dos personas comparten el 60% del gasto
+
+   
+       //Dos personas comparten el 60% del gasto
     const selectRamdomTwo = (userList,userListLength)=>{
       
         const numOne = Math.floor(Math.random() * userListLength);
@@ -219,6 +251,9 @@ console.log("usuario a borrar",key)
           }
         })
 
+        if(userListLength>2){
+
+
         const numTwo = Math.floor(Math.random() * selectRamdomTwo.length)
         console.log("numTwo = "+JSON.stringify(numTwo))
         console.log("winners pay"+getTotalAmount)
@@ -229,7 +264,7 @@ console.log("usuario a borrar",key)
         winner: {
           winnerOne:userList[numOne].userName,
           secondWinner:userList[numTwo].userName,
-          amount2Pay:winnersPay/2,
+          debt:winnersPay/2,
           resultType:"Bondi",
           
           
@@ -239,13 +274,34 @@ console.log("usuario a borrar",key)
           showSplitter:false,
           showResetBtn:true
           })
+        }else{
+          
+          
+            {
+              this.setState({
+                errorOn:{
+                  message:"No ingresaste la cantidad minima de participantes para usar este boton",
+
+                  },
+                  showIntegrantesList:false,
+                  showRenderWinner:true,
+                  showSplitter:false,
+                  showResetBtn:true
+
+                },()=>{console.log("No ingresaste la cantidad minima de participantes para usar este boton")})
+            }
+        }
+
+        
       
    
 
       
 
 
-    }
+      }
+    
+   
     
 
     
@@ -255,7 +311,25 @@ console.log("usuario a borrar",key)
 
   }
   
-    
+const todosPorIgual =()=>{
+const debt = parseInt(getTotalAmount/userListLength);
+
+return this.setState({
+  winner: {
+    amount2Pay:debt,
+      },
+    showIntegrantesList:false,
+    showRenderWinner:true,
+    showSplitter:false,
+    showResetBtn:true
+    })
+
+
+
+
+ 
+}   
+
 switch(selection){
   case 'ruletaRusa':
   return ruletaRusa()
@@ -263,9 +337,10 @@ switch(selection){
   case 'bondi':
   return bondi()
   break
-  /*default:
+  case "todosPorIgual":
   return todosPorIgual()
-  break*/
+  break
+
 }
 
   
@@ -292,7 +367,7 @@ switch(selection){
       </header>
           
           {this.state.showIntegrantesList ? <IntegrantesList showIntegrantesList={this.state.showIntegrantesList} removeUser={this.removeUser} membersList={this.state.integrantes} />:null}
-          {this.state.showRenderWinner ? <RenderWinner showRenderWinner={this.state.showRenderWinner} winner={this.state.winner}/> :null}
+          {this.state.showRenderWinner ? <RenderWinner showRenderWinner={this.state.showRenderWinner}  error={this.state.errorOn} winner={this.state.winner} returHome={this.returnToHome}/>:null}
           {this.state.showInput ? <AddUsersInput displayState={this.state.showInput} addUser={this.adduser} removeInput={this.removeInput} className={this.state.showInput ? null : "hide"}/>:null}
           {this.state.showSplitter ? <Splitter displaySplitter={this.state.showSplitter} selectedValue={this.handleSelection} />:null}
           {this.state.showResetBtn ? <ResetBtn reset={this.reinitializeApp}/> : null}

@@ -20,21 +20,21 @@ class Splitter extends React.Component {
       <div>   
         {this.props.displaySplitter ? 
         <div className="splitterContainer">
-          <h6>Seleccione la forma en la cual se dividiran los gastos</h6>
+          <h6 className="SpitterText">Seleccione la forma en la cual se dividiran los gastos, una vez que elijas... no hay vuelta atras...</h6>
           <button onClick={(event)=>{this.handleClick("ruletaRusa")}}>
             <div className="splitterBtn">
               <span className="splliterBtnTitle">RULETA RUSA</span>
-              <span className="splitterDescription"> SE ELIGE RANDOM UNA PERSONA DEL LISTADO QUIEN PAGARÁ LA MITAD DE LA CUENTA</span>
+              <span className="splitterDescription"> El algoritmo seleccion ramdom a una persona del listado quien pagará la mitad de la cuenta.</span>
             </div>
           </button>
           <button onClick={(event)=>{this.handleClick("bondi")}}>
             <div className="splitterBtn">
               <span className="splliterBtnTitle">BONDI</span>
-              <span className="splitterDescription">Minimo 3 integrantes: DOS INTEGRANTES DEL GRUPO PAGARAN UN 30%</span>
+              <span className="splitterDescription"><span>(Atencion: Minimo 2 integrantes)</span> Dos Integrantes del grupo tienen que gatillar el 30% de la cuenta</span>
             </div>
           </button>
           <button>
-            <div onClick={(event)=>{this.handleClick("igual")}} className="splitterBtn">
+            <div onClick={(event)=>{this.handleClick("todosPorIgual")}} className="splitterBtn">
               <span className="splliterBtnTitle">TODOS X IGUAL</span>
               <span className="splitterDescription">TODOS PAGAN LO MISMO</span>
             </div>

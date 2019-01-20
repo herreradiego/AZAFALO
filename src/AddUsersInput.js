@@ -19,12 +19,14 @@ class AddUsersInput extends React.Component{
             userBudget:"",
             sorteado : false
 
-        }
+        },
+        invalidData:false
+        
     }
     
     this.handleCloseBanner=this.handleCloseBanner.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this);
-    
+    this.handleBudget = this.handleBudget.bind(this)
     }
 
 componentDidMount(){
@@ -52,19 +54,31 @@ componentDidMount(){
         })
     }
 
-    handleBudget(value){
-
-        this.setState({
-            newUserData:{
-                userBudget:value.target.value
-            }
-        })
+    handleBudget(event){
+        
+        const budget = event.target.value ? isFinite(event.target.value) : null
+        const eventValue = event.target.value
+        const exp = new RegExp("^[0-9]*$");
+        
+        if(exp.test(eventValue)){
+            this.setState({
+                newUserData:{
+                    userBudget:event.target.value,
+                },
+                invalidData:false
+            })
+        }else{
+            this.setState({
+                invalidData:true
+            })
+            console.log("LETRA")
+        }
+    
     }
     
 
       handleSubmit(event){
         event.preventDefault();
-        
         console.log("ENTRO ÑERI "+event.target.elements.userNameInput.value)
         this.setState({
             newUserData:{
@@ -108,49 +122,29 @@ componentDidMount(){
                 console.log("USUARIO A ENViAR: ",this.state.newUserData)
                 const usuarioe=this.state.newUserData
                 this.props.addUser(usuarioe)
+                
             })
-        
-        
-    
-
-        
 
        
-
-        
-        
-        
-        
-
-
-       
-
         this.setState({
             finishBtn:{
               show:true
             }
            
           })
-    
-    
-       
-      
-    
 
     
-      this.handleCloseBanner();
-      
-     
-     
-      }
+        this.handleCloseBanner();
+    }
 
     render(){
         return(
        <div className="inputContainer">{this.props.displayState ?      <div>
         <WelcomeMessage show={this.state.welcomeBanner.show}/>
-        <form onSubmit={this.handleSubmit}>
-            <input type="text" onChange={this.handleName.bind(this)} name="userNameInput"ref={userNameInput => this.element = userNameInput} placeholder="Nombre?" />
-            <input type="text" onChange={this.handleBudget.bind(this)} name="userBudgetInput" ref={userBudget => this.element =userBudget} placeholder="Cuanto Pusiste?"/>
+        <form onSubmit={this.handleSubmit} autocomplete="off">
+            <input type="text" onChange={this.handleName.bind(this)} name="userNameInput"ref={userNameInput => this.element = userNameInput} placeholder="Nombre?" required/>
+            {this.state.invalidData ? <Invalid className="errorMessage"/>: null}
+            <input type="text"   maxlength="4" onChange={(event)=>{this.handleBudget(event)}} name="userBudgetInput" ref={userBudget => this.element =userBudget} placeholder="Cuanto Pusiste?" required/>
             <button type="submit" className="addMemberBtn">Agregar!</button>
             {this.state.finishBtn.show ? (
             <button onClick={this.props.removeInput} className="finishBtn">Finish!</button>
@@ -178,6 +172,12 @@ const WelcomeMessage = (props)=>{
             }
         
     
+}
+
+const Invalid = ()=>{
+    return(
+        <React.Fragment>Por favor ingresa solamente numeros en este campo. Gracias!</React.Fragment>
+    )
 }
 
 
